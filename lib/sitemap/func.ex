@@ -1,49 +1,53 @@
 defmodule Sitemap.Func do
-  def iso8601(yy, mm, dd, hh, mi, ss) do
-    "~4.10.0B-~2.10.0B-~2.10.0BT~2.10.0B:~2.10.0B:~2.10.0BZ"
-    |> :io_lib.format([yy, mm, dd, hh, mi, ss])
-    |> IO.iodata_to_binary()
-  end
+  @moduledoc """
+  Func is that module that is usually called utils, common, or another name
+  you can figure it out where you have not to think about to put whatever
+  function you don't know where to put.
 
-  def iso8601 do
-    {{yy, mm, dd}, {hh, mi, ss}} = :calendar.universal_time()
-    iso8601(yy, mm, dd, hh, mi, ss)
-  end
+  Of course, it should be moved to other modules with better names, but at
+  the moment, here they are.
+  """
 
-  def iso8601({{yy, mm, dd}, {hh, mi, ss}}) do
-    iso8601(yy, mm, dd, hh, mi, ss)
-  end
+  #  TODO move functions to meaningful names
 
-  def iso8601(%NaiveDateTime{} = dt) do
-    dt
-    |> NaiveDateTime.to_erl()
+  @doc """
+  Convert the different information about date and times to ISO-8601 format.
+  """
+  def iso8601(year, month, day, hour, minute, second) do
+    NaiveDateTime.new!(year, month, day, hour, minute, second)
     |> iso8601()
   end
 
-  def iso8601(%DateTime{} = dt) do
-    DateTime.to_iso8601(dt)
+  def iso8601 do
+    DateTime.utc_now(:second)
+    |> iso8601()
   end
 
-  def iso8601(%Date{} = dt) do
-    Date.to_iso8601(dt)
+  def iso8601({{year, month, day}, {hour, minute, second}}) do
+    iso8601(year, month, day, hour, minute, second)
   end
 
-  if Code.ensure_loaded?(Ecto.DateTime) do
-    def iso8601(%Ecto.DateTime{} = dt) do
-      dt
-      |> Ecto.DateTime.to_erl()
-      |> iso8601()
-    end
+  def iso8601(%NaiveDateTime{} = datetime) do
+    NaiveDateTime.truncate(datetime, :second)
+    |> DateTime.from_naive!("Etc/UTC")
+    |> iso8601()
   end
 
-  if Code.ensure_loaded?(Ecto.Date) do
-    def iso8601(%Ecto.Date{} = dt) do
-      Ecto.Date.to_iso8601(dt)
-    end
+  def iso8601(%DateTime{} = datetime) do
+    datetime
+    |> DateTime.truncate(:second)
+    |> DateTime.to_iso8601()
   end
 
-  def iso8601(dt), do: dt
+  def iso8601(%Date{} = date) do
+    Date.to_iso8601(date)
+  end
 
+  def iso8601(datetime), do: datetime
+
+  @doc """
+  Remove useless tags or content from the list of XML.
+  """
   def eraser(elements) do
     Enum.filter(elements, fn
       el when is_list(el) -> eraser(el)
@@ -52,16 +56,36 @@ defmodule Sitemap.Func do
     end)
   end
 
+  @doc """
+  Convert boolean value to the string: yes or no.
+  """
+  @spec yes_no(boolean()) :: String.t()
   def yes_no(false), do: "no"
   def yes_no(_), do: "yes"
 
+  @doc """
+  Convert boolean value to the string: deny or allow.
+  """
+  @spec allow_deny(boolean()) :: String.t()
   def allow_deny(false), do: "deny"
   def allow_deny(_), do: "allow"
 
+  @doc """
+  Convert if the parameter received is truthy value to ap=1,
+  otherwise ap=0.
+  """
+  @spec autoplay(any()) :: String.t()
   def autoplay(bool) do
     if bool, do: "ap=1", else: "ap=0"
   end
 
+  @doc """
+  Get the environment variable passed as parameter. If the value is
+  false or true text it will be converted as boolean. If the value
+  could be a number, it's converted to an integer otherwise it's
+  kept as strings or nil.
+  """
+  @spec get_env(String.t()) :: boolean() | nil | integer() | String.t()
   def get_env(key) do
     value = System.get_env(key)
 
@@ -81,6 +105,10 @@ defmodule Sitemap.Func do
     end
   end
 
+  @doc """
+  Concrete if the value is a number or not.
+  """
+  @spec numeric?(nil | String.t()) :: boolean()
   def numeric?(nil), do: false
 
   def numeric?(str) do
@@ -91,6 +119,10 @@ defmodule Sitemap.Func do
     end
   end
 
+  @doc """
+  Join URI data from the two URIs passed as parameters.
+  """
+  @spec url_join(String.t() | URI.t(), String.t() | URI.t()) :: String.t()
   def url_join(src, dest) do
     src = URI.parse(src)
     dest = URI.parse(dest)

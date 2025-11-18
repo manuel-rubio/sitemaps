@@ -28,11 +28,15 @@ defmodule Sitemap.Mixfile do
       {:xml_builder, ">= 0.0.0"},
       {:ecto, ">= 1.1.0", only: :test},
       {:sweet_xml, ">= 0.0.0", only: :test},
-      {:credo, ">= 0.0.0", only: :dev},
       {:earmark, ">= 0.0.0", only: :dev},
-      {:ex_doc, ">= 0.0.0", only: :dev},
-      {:inch_ex, ">= 0.0.0", only: :docs},
-      {:dialyxir, ">= 0.0.0", only: :dev, runtime: false}
+
+      # only for dev
+      {:dialyxir, ">= 0.0.0", only: [:dev, :test], runtime: false},
+      {:credo, ">= 0.0.0", only: [:dev, :test], runtime: false},
+      {:doctor, ">= 0.0.0", only: [:dev, :test], runtime: false},
+      {:ex_check, "~> 0.14", only: [:dev, :test], runtime: false},
+      {:ex_doc, ">= 0.0.0", only: [:dev, :test], runtime: false},
+      {:mix_audit, ">= 0.0.0", only: [:dev, :test], runtime: false}
     ]
   end
 

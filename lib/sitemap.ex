@@ -1,6 +1,19 @@
 defmodule Sitemap do
+  @moduledoc """
+  Sitemap application is in charge of running the supervisor and the following
+  processes under it:
+
+  - `Sitemap.Config`
+  - `Sitemap.Builders.File`
+  - `Sitemap.Builders.IndexFile`
+  - `Sitemap.Namer`
+    - `:namer_index_file`
+    - `:namer_file`
+  """
   use Application
 
+  @doc false
+  @impl true
   def start(_type, _args) do
     children = [
       Sitemap.Config,

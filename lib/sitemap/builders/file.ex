@@ -1,4 +1,9 @@
 defmodule Sitemap.Builders.File do
+  @moduledoc """
+  Build the file content of the sitemap. It creates the file and
+  it's in charge of the size, if it's growing over the configured
+  size, it's creating a new file.
+  """
   alias Sitemap.Builders.Url
   alias Sitemap.Config
   alias Sitemap.Consts
@@ -24,6 +29,11 @@ defmodule Sitemap.Builders.File do
       s.news_count < cfg.max_sitemap_news
   end
 
+  @doc """
+  Add a link inside of the file. The `link` attribute must be a valid link
+  for accessing to a page in the website and we could add some attributes.
+  """
+  # TODO add doc about the attrs we could use
   def add(link, attrs \\ []) do
     content =
       Url.to_xml(link, attrs)
@@ -37,11 +47,15 @@ defmodule Sitemap.Builders.File do
     end
   end
 
+  @doc """
+  Write the file in the XML format for the sitemap. First step is reserve
+  a new name and then perform the writing of the links accumulated in the
+  state.
+  """
   def write do
-    s = state()
-    content = Consts.xml_header() <> s.content <> Consts.xml_footer()
+    content = Consts.xml_header() <> state().content <> Consts.xml_footer()
 
     Location.reserve_name(:file)
-    Location.write(:file, content, s.link_count)
+    Sitemap.File.write(:file, content)
   end
 end

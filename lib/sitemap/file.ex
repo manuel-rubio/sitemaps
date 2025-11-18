@@ -1,9 +1,15 @@
 defmodule Sitemap.File do
+  @moduledoc """
+  Perform the write of the file.
+  """
   alias Sitemap.DirNotExists
   alias Sitemap.Location
 
+  @doc """
+  Write the content of the file given the name.
+  """
   def write(name, data) do
-    dir = Location.directory(name)
+    dir = Location.directory()
 
     cond do
       not File.exists?(dir) -> File.mkdir_p(dir)
@@ -14,14 +20,9 @@ defmodule Sitemap.File do
     path = Location.path(name)
 
     if Regex.match?(~r/.gz$/, path) do
-      writefile(File.open!(path, [:write, :utf8, :compressed]), data)
+      File.write!(path, data, [:write, :utf8, :compressed])
     else
-      writefile(File.open!(path, [:write, :utf8]), data)
+      File.write!(path, data, [:write, :utf8])
     end
-  end
-
-  defp writefile(stream, data) do
-    IO.write(stream, data)
-    File.close(stream)
   end
 end

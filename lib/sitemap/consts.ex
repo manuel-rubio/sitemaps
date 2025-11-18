@@ -1,4 +1,13 @@
 defmodule Sitemap.Consts do
+  @moduledoc """
+  Define the information needed to generate XML. Here you can find the schemas,
+  the XML header, XML footer, and same header and footer for XML indexes.
+  """
+
+  @doc """
+  The schemas we will need for XML sitemap.
+  """
+  @spec schemas :: %{atom() => String.t()}
   def schemas do
     %{
       geo: "http://www.google.com/geo/schemas/sitemap/1.0",
@@ -10,6 +19,10 @@ defmodule Sitemap.Consts do
     }
   end
 
+  @doc """
+  The header in use for the sitemap file.
+  """
+  @spec xml_header :: String.t()
   def xml_header do
     """
     <?xml version="1.0" encoding="UTF-8"?>
@@ -29,9 +42,17 @@ defmodule Sitemap.Consts do
     """
   end
 
+  @doc """
+  The footer (or closing tag) for the XML sitemap.
+  """
+  @spec xml_footer :: String.t()
   def xml_footer, do: "</urlset>"
 
-  def xml_idxheader do
+  @doc """
+  The header for the index file.
+  """
+  @spec xml_index_header :: String.t()
+  def xml_index_header do
     """
     <?xml version="1.0" encoding="UTF-8"?>
     <sitemapindex
@@ -43,5 +64,9 @@ defmodule Sitemap.Consts do
     """
   end
 
-  def xml_idxfooter, do: "</sitemapindex>"
+  @doc """
+  The footer for the index file.
+  """
+  @spec xml_index_footer :: String.t()
+  def xml_index_footer, do: "</sitemapindex>"
 end

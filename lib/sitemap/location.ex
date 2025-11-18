@@ -1,20 +1,33 @@
 defmodule Sitemap.Location do
+  @moduledoc """
+  Location is a facility for giving the path and filename for the sitemap file
+  and the index file.
+  """
   alias Sitemap.Config
   alias Sitemap.Namer
 
-  def directory(_name), do: directory()
-
+  @doc """
+  Get the directory, the _files_path_ from the configuration and expand it
+  to get the absolute path.
+  """
   def directory do
     Config.get().files_path
     |> Path.expand()
   end
 
+  @doc """
+  Get the full path for the file passed as parameter.
+  """
   def path(name) do
     Config.get().files_path
     |> Path.join(filename(name))
     |> Path.expand()
   end
 
+  @doc """
+  Get the URL for the specific sitemap or index files. The parameter expects
+  or `:file` or `:index_file` or a string with the name of the file.
+  """
   def url(name) when is_atom(name) do
     s = Config.get()
 
@@ -28,23 +41,25 @@ defmodule Sitemap.Location do
     |> Path.join(link)
   end
 
+  @doc """
+  Get the filename given the name.
+  """
   def filename(name) do
-    fname = Namer.to_string(name)
+    filename = Namer.to_string(name)
 
     if Config.get().compress do
-      fname
+      filename
     else
-      Regex.replace(~r/\.gz$/, fname, "")
+      Regex.replace(~r/\.gz$/, filename, "")
     end
   end
 
+  @doc """
+  Get a new filename.
+  """
   def reserve_name(name) do
-    fname = filename(name)
+    filename = filename(name)
     Namer.next(name)
-    fname
-  end
-
-  def write(name, data, _count) do
-    Sitemap.File.write(name, data)
+    filename
   end
 end

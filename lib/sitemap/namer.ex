@@ -1,4 +1,7 @@
 defmodule Sitemap.Namer do
+  @moduledoc """
+  Names generated for the sitemap files.
+  """
   alias Sitemap.Config
   alias Sitemap.NameError
 
@@ -8,20 +11,32 @@ defmodule Sitemap.Namer do
     start: 1,
     count: nil
 
+  @doc """
+  Get the name of the filename given the `:file`, `:index_file`, or a string.
+  """
   def to_string(name) do
     s = state(name)
     "#{Config.get().filename}#{s.count}#{s.ext}"
   end
 
+  @doc """
+  Restart the naming for the sitemap and index files.
+  """
   def reset(name) do
     update_state(name, :count, state(name).zero)
   end
 
+  @doc """
+  Returns true if it's still in the first (0) file, otherwise false.
+  """
   def start?(name) do
     s = state(name)
     s.count == s.zero
   end
 
+  @doc """
+  Generate a new file.
+  """
   def next(name) do
     if start?(name) do
       update_state(name, :count, state(name).start)
@@ -30,6 +45,10 @@ defmodule Sitemap.Namer do
     end
   end
 
+  @doc """
+  Goes to the previous file. It generates an error if it's
+  not started, see `start?/1`.
+  """
   def previous!(name) do
     if start?(name),
       do:
