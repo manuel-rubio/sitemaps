@@ -41,6 +41,20 @@ defmodule Sitemaps.Config do
           create_index: boolean()
         }
 
+  @type keys() ::
+          :max_sitemap_files
+          | :max_sitemap_links
+          | :max_sitemap_news
+          | :max_sitemap_images
+          | :max_sitemap_file_size
+          | :host
+          | :filename
+          | :public_path
+          | :files_path
+          | :verbose
+          | :compress
+          | :create_index
+
   defstruct [
     :max_sitemap_files,
     :max_sitemap_links,
@@ -127,7 +141,7 @@ defmodule Sitemaps.Config do
   @doc """
   Set the configuration inside of the agent.
   """
-  @spec set(String.t(), any()) :: :ok
+  @spec set(keys(), any()) :: :ok
   def set(key, value) do
     Agent.update(__MODULE__, fn config ->
       Map.update!(config, key, fn _ -> value end)
@@ -138,7 +152,7 @@ defmodule Sitemaps.Config do
   Passing as first parameter a list of tuples, we use `set/2` for setting
   each pair of key-value data from the `overwrite` parameter.
   """
-  @spec update([{String.t(), any()}]) :: :ok
+  @spec update([{keys(), any()}]) :: :ok
   def update(overwrite) do
     Enum.each(overwrite, fn {key, value} ->
       set(key, value)

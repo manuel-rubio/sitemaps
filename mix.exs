@@ -5,7 +5,7 @@ defmodule Sitemaps.Mixfile do
     [
       app: :sitemaps,
       name: "Sitemaps",
-      version: "0.1.0",
+      version: "0.1.1",
       elixir: ">= 1.17.0",
       description: "Generating sitemap files",
       build_embedded: Mix.env() == :prod,
