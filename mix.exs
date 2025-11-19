@@ -1,34 +1,32 @@
-defmodule Sitemap.Mixfile do
+defmodule Sitemaps.Mixfile do
   use Mix.Project
 
   def project do
     [
-      app: :sitemap,
-      name: "Sitemap",
-      version: "1.1.0",
-      elixir: ">= 1.3.0",
-      description: "Generating sitemap.xml",
+      app: :sitemaps,
+      name: "Sitemaps",
+      version: "0.1.0",
+      elixir: ">= 1.17.0",
+      description: "Generating sitemap files",
       build_embedded: Mix.env() == :prod,
       start_permanent: Mix.env() == :prod,
       package: package(),
       deps: deps(),
-      source_url: "https://github.com/manuel-rubio/sitemap"
+      source_url: "https://github.com/manuel-rubio/sitemaps"
     ]
   end
 
   def application do
     [
       extra_applications: [:inets],
-      mod: {Sitemap, []}
+      mod: {Sitemaps, []}
     ]
   end
 
   defp deps do
     [
       {:xml_builder, ">= 0.0.0"},
-      {:ecto, ">= 1.1.0", only: :test},
       {:sweet_xml, ">= 0.0.0", only: :test},
-      {:earmark, ">= 0.0.0", only: :dev},
 
       # only for dev
       {:dialyxir, ">= 0.0.0", only: [:dev, :test], runtime: false},

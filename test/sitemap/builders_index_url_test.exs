@@ -1,10 +1,10 @@
-defmodule Sitemap.BuildersIndexUrlTest do
+defmodule Sitemaps.BuildersIndexUrlTest do
   use ExUnit.Case
 
   setup do
-    Sitemap.Builders.File.stop()
-    Sitemap.Builders.IndexFile.stop()
-    Sitemap.Namer.stop(:file)
-    Sitemap.Namer.stop(:index_file)
+    Sitemaps.Builders.File.stop()
+    Sitemaps.Builders.IndexFile.stop()
+    Sitemaps.Namer.stop(:file)
+    Sitemaps.Namer.stop(:index_file)
   end
 end

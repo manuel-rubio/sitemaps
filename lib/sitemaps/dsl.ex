@@ -1,4 +1,4 @@
-defmodule Sitemap.DSL do
+defmodule Sitemaps.DSL do
   @moduledoc """
   The DSL is the implementation of the most important part
   of this project, it's going to help you to define the
@@ -7,8 +7,8 @@ defmodule Sitemap.DSL do
   As an example, you can see in the README.md file this example:
 
   ```elixir
-  defmodule Sitemaps do
-    use Sitemap
+  defmodule MyApp.Sitemaps do
+    use Sitemaps
 
     def generate do
       create do
@@ -23,7 +23,7 @@ defmodule Sitemap.DSL do
   end
   ```
 
-  Adding `use Sitemap` in the beginning of the module you choose for
+  Adding `use Sitemaps` in the beginning of the module you choose for
   setting your sitemap it will add some stuff that will let you use
   the `create/1` macros and other functions like `ping/0`.
   """
@@ -33,8 +33,8 @@ defmodule Sitemap.DSL do
     quote do
       @__use_resource__ unquote(opts)
 
-      import Sitemap.DSL
-      import Sitemap.Generator
+      import Sitemaps.DSL
+      import Sitemaps.Generator
     end
   end
 
@@ -42,12 +42,12 @@ defmodule Sitemap.DSL do
   Let you define the sitemap. It's creating the environment where you
   could use `add/2` as many times as you need. In this case you can
   specify actions before starting with the block. These options are
-  the same as you can see in the `Sitemap.Config` module.
+  the same as you can see in the `Sitemaps.Config` module.
   """
   defmacro create(options, contents) do
     quote do
-      Sitemap.Config.update(@__use_resource__)
-      Sitemap.Config.update(unquote(options))
+      Sitemaps.Config.update(@__use_resource__)
+      Sitemaps.Config.update(unquote(options))
       create(unquote(contents ++ [use: false]))
     end
   end
@@ -59,7 +59,7 @@ defmodule Sitemap.DSL do
     case contents do
       [do: block] ->
         quote do
-          Sitemap.Config.update(@__use_resource__)
+          Sitemaps.Config.update(@__use_resource__)
           unquote(block)
           fin()
         end

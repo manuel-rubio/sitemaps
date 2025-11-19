@@ -1,10 +1,10 @@
-defmodule Sitemap.Builders.IndexUrl do
+defmodule Sitemaps.Builders.IndexUrl do
   @moduledoc """
   It has only one function to convert to XML a link.
   Indeed, it's creating a _sitemap_ tag that's returned
   to be included inside of a sitemap file.
   """
-  alias Sitemap.Func
+  alias Sitemaps.Func
   import XmlBuilder
 
   @doc """

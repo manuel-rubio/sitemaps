@@ -1,4 +1,4 @@
-defmodule Sitemap.Func do
+defmodule Sitemaps.Func do
   @moduledoc """
   Func is that module that is usually called utils, common, or another name
   you can figure it out where you have not to think about to put whatever

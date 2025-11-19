@@ -1,22 +1,22 @@
-defmodule Sitemap.Builders.IndexFile do
+defmodule Sitemaps.Builders.IndexFile do
   @moduledoc """
   Creates a index file for the number of files containing the sitemaps.
   """
-  alias Sitemap.Builders.File, as: FileBuilder
-  alias Sitemap.Builders.IndexUrl
-  alias Sitemap.Consts
-  alias Sitemap.Location
+  alias Sitemaps.Builders.File, as: FileBuilder
+  alias Sitemaps.Builders.IndexUrl
+  alias Sitemaps.Consts
+  alias Sitemaps.Location
 
   require XmlBuilder
 
-  use Sitemap.State,
+  use Sitemaps.State,
     content: "",
     link_count: 0,
     total_count: 0
 
   @doc """
   Add the file in use in `Location` to the index_file. The options
-  are passed to `Sitemap.Builders.IndexUrl.to_xml/2` as second parameter,
+  are passed to `Sitemaps.Builders.IndexUrl.to_xml/2` as second parameter,
   you can check there which options can be used. By default, no options
   are needed.
   """
@@ -50,6 +50,6 @@ defmodule Sitemap.Builders.IndexFile do
   """
   def write do
     content = Consts.xml_index_header() <> state().content <> Consts.xml_index_footer()
-    Sitemap.File.write(:index_file, content)
+    Sitemaps.File.write(:index_file, content)
   end
 end

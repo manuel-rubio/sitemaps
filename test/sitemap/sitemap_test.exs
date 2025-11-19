@@ -1,13 +1,13 @@
-defmodule Sitemap.SitemapTest do
+defmodule Sitemaps.SitemapTest do
   use ExUnit.Case
   # , max_sitemap_links: 5
-  use Sitemap
+  use Sitemaps
 
   setup do
-    Sitemap.Builders.File.stop()
-    Sitemap.Builders.IndexFile.stop()
-    Sitemap.Namer.stop(:file)
-    Sitemap.Namer.stop(:index_file)
+    Sitemaps.Builders.File.stop()
+    Sitemaps.Builders.IndexFile.stop()
+    Sitemaps.Namer.stop(:file)
+    Sitemaps.Namer.stop(:index_file)
 
     on_exit(fn ->
       nil
@@ -19,7 +19,7 @@ defmodule Sitemap.SitemapTest do
 
   test "limit file: gen 100 rows" do
     create do
-      Sitemap.Config.update(public_path: "")
+      Sitemaps.Config.update(public_path: "")
 
       Enum.each(1..20, fn n ->
         add("rss#{n}", priority: 0.1, changefreq: "weekly", expires: nil, mobile: true)

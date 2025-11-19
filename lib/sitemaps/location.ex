@@ -1,10 +1,10 @@
-defmodule Sitemap.Location do
+defmodule Sitemaps.Location do
   @moduledoc """
   Location is a facility for giving the path and filename for the sitemap file
   and the index file.
   """
-  alias Sitemap.Config
-  alias Sitemap.Namer
+  alias Sitemaps.Config
+  alias Sitemaps.Namer
 
   @doc """
   Get the directory, the _files_path_ from the configuration and expand it

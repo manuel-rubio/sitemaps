@@ -1,4 +1,4 @@
-defmodule Sitemap.Config do
+defmodule Sitemaps.Config do
   @moduledoc """
   Configuration for the generation of the sitemap. Here we define some values
   that are going to be in use for the sitemap files or index files but we
@@ -8,7 +8,7 @@ defmodule Sitemap.Config do
   files, links, news, images, and sizes.
   """
   use Agent, restart: :transient
-  import Sitemap.Func, only: [get_env: 1]
+  import Sitemaps.Func, only: [get_env: 1]
 
   @typedoc """
   The configuration struct contains the following data:
@@ -66,7 +66,7 @@ defmodule Sitemap.Config do
   defp get_cfg(base, key, env_key, default) do
     base[key] ||
       get_env(env_key) ||
-      Application.get_env(:sitemap, key, default)
+      Application.get_env(:sitemaps, key, default)
   end
 
   @doc """
@@ -85,35 +85,35 @@ defmodule Sitemap.Config do
 
   The environment variables you can set:
 
-  - `SITEMAP_MAXFILES` for `:max_sitemap_files`, default value: 10_000
-  - `SITEMAP_MAXLINKS` for `:max_sitemap_links`, default value: 10_000
-  - `SITEMAP_MAXNEWS` for `:max_sitemap_news`, default value: 1_000
-  - `SITEMAP_MAXIMAGES` for `:max_sitemap_images`, default value: 1_000
-  - `SITEMAP_MAXFILESIZE` for `:max_sitemap_file_size`, default value: 5_000_000
-  - `SITEMAP_HOST` for `:host`, default value: "http://www.example.com"
-  - `SITEMAP_FILENAME` for `:filename`, default value: "sitemap"
-  - `SITEMAP_SITEMAPS_PATH` for `:files_path`, default value: "sitemaps/"
-  - `SITEMAP_PUBLIC_PATH` for `:public_path`, default value: "sitemaps/"
-  - `SITEMAP_VERBOSE` for `:verbose`, default value: true
-  - `SITEMAP_COMPRESS` for `:compress`, default value: true
-  - `SITEMAP_CREATE_INDEX` for `:create_index`, default value: "auto"
+  - `SITEMAPS_MAXFILES` for `:max_sitemap_files`, default value: 10_000
+  - `SITEMAPS_MAXLINKS` for `:max_sitemap_links`, default value: 10_000
+  - `SITEMAPS_MAXNEWS` for `:max_sitemap_news`, default value: 1_000
+  - `SITEMAPS_MAXIMAGES` for `:max_sitemap_images`, default value: 1_000
+  - `SITEMAPS_MAXFILESIZE` for `:max_sitemap_file_size`, default value: 5_000_000
+  - `SITEMAPS_HOST` for `:host`, default value: "http://www.example.com"
+  - `SITEMAPS_FILENAME` for `:filename`, default value: "sitemap"
+  - `SITEMAPS_SITEMAPS_PATH` for `:files_path`, default value: "sitemaps/"
+  - `SITEMAPS_PUBLIC_PATH` for `:public_path`, default value: "sitemaps/"
+  - `SITEMAPS_VERBOSE` for `:verbose`, default value: true
+  - `SITEMAPS_COMPRESS` for `:compress`, default value: true
+  - `SITEMAPS_CREATE_INDEX` for `:create_index`, default value: "auto"
   """
   # TODO the order makes no sense, it should be second application configuration.
   def configure(overwrite) do
     start_link(%__MODULE__{
-      max_sitemap_files: get_cfg(overwrite, :max_sitemap_files, "SITEMAP_MAXFILES", 10_000),
-      max_sitemap_links: get_cfg(overwrite, :max_sitemap_links, "SITEMAP_MAXLINKS", 10_000),
-      max_sitemap_news: get_cfg(overwrite, :max_sitemap_news, "SITEMAP_MAXNEWS", 1_000),
-      max_sitemap_images: get_cfg(overwrite, :max_sitemap_images, "SITEMAP_MAXIMAGES", 1_000),
+      max_sitemap_files: get_cfg(overwrite, :max_sitemap_files, "SITEMAPS_MAXFILES", 10_000),
+      max_sitemap_links: get_cfg(overwrite, :max_sitemap_links, "SITEMAPS_MAXLINKS", 10_000),
+      max_sitemap_news: get_cfg(overwrite, :max_sitemap_news, "SITEMAPS_MAXNEWS", 1_000),
+      max_sitemap_images: get_cfg(overwrite, :max_sitemap_images, "SITEMAPS_MAXIMAGES", 1_000),
       max_sitemap_file_size:
-        get_cfg(overwrite, :max_sitemap_file_size, "SITEMAP_MAXFILESIZE", 5_000_000),
-      host: get_cfg(overwrite, :host, "SITEMAP_HOST", "http://www.example.com"),
-      filename: get_cfg(overwrite, :filename, "SITEMAP_FILENAME", "sitemap"),
-      files_path: get_cfg(overwrite, :files_path, "SITEMAP_SITEMAPS_PATH", "sitemaps/"),
-      public_path: get_cfg(overwrite, :public_path, "SITEMAP_PUBLIC_PATH", "sitemaps/"),
-      verbose: get_cfg(overwrite, :verbose, "SITEMAP_VERBOSE", true),
-      compress: get_cfg(overwrite, :compress, "SITEMAP_COMPRESS", true),
-      create_index: get_cfg(overwrite, :create_index, "SITEMAP_CREATE_INDEX", "auto")
+        get_cfg(overwrite, :max_sitemap_file_size, "SITEMAPS_MAXFILESIZE", 5_000_000),
+      host: get_cfg(overwrite, :host, "SITEMAPS_HOST", "http://www.example.com"),
+      filename: get_cfg(overwrite, :filename, "SITEMAPS_FILENAME", "sitemap"),
+      files_path: get_cfg(overwrite, :files_path, "SITEMAPS_SITEMAPS_PATH", "sitemaps/"),
+      public_path: get_cfg(overwrite, :public_path, "SITEMAPS_PUBLIC_PATH", "sitemaps/"),
+      verbose: get_cfg(overwrite, :verbose, "SITEMAPS_VERBOSE", true),
+      compress: get_cfg(overwrite, :compress, "SITEMAPS_COMPRESS", true),
+      create_index: get_cfg(overwrite, :create_index, "SITEMAPS_CREATE_INDEX", "auto")
     })
   end
 

@@ -1,4 +1,4 @@
-defmodule Sitemap.Consts do
+defmodule Sitemaps.Consts do
   @moduledoc """
   Define the information needed to generate XML. Here you can find the schemas,
   the XML header, XML footer, and same header and footer for XML indexes.

@@ -1,9 +1,9 @@
-defmodule Sitemap.File do
+defmodule Sitemaps.File do
   @moduledoc """
   Perform the write of the file.
   """
-  alias Sitemap.DirNotExists
-  alias Sitemap.Location
+  alias Sitemaps.DirNotExists
+  alias Sitemaps.Location
 
   @doc """
   Write the content of the file given the name.

@@ -1,14 +1,14 @@
-defmodule Sitemap.Generator do
+defmodule Sitemaps.Generator do
   @moduledoc """
   Generator provides functions for generate the sitemap file.
   """
-  alias Sitemap.Builders.File, as: FileBuilder
-  alias Sitemap.Builders.IndexFile
-  alias Sitemap.Location
-  alias Sitemap.Namer
+  alias Sitemaps.Builders.File, as: FileBuilder
+  alias Sitemaps.Builders.IndexFile
+  alias Sitemaps.Location
+  alias Sitemaps.Namer
 
   @doc """
-  Add a link to the sitemap file. See `Sitemap.Builders.File.add/2`.
+  Add a link to the sitemap file. See `Sitemaps.Builders.File.add/2`.
   """
   def add(link, attrs \\ []) do
     if FileBuilder.add(link, attrs) == :full do
@@ -20,7 +20,7 @@ defmodule Sitemap.Generator do
   end
 
   @doc """
-  Add a link to the index file. See `Sitemap.Builders.IndexFile.add/2`.
+  Add a link to the index file. See `Sitemaps.Builders.IndexFile.add/2`.
   """
   def add_to_index(link, options \\ []) do
     IndexFile.add(link, options)

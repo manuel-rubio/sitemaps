@@ -1,18 +1,18 @@
-defmodule Sitemap.Builders.Url do
+defmodule Sitemaps.Builders.Url do
   @moduledoc """
   Create the _url_ tag adding all of the information that could be
   passed via attributes to the function `to_xml/2` as second parameter.
   """
   import XmlBuilder
 
-  alias Sitemap.Config
-  alias Sitemap.Func
+  alias Sitemaps.Config
+  alias Sitemaps.Func
 
   @doc """
   It creates the XML representation of a link based on the attributes
   passed as second parameter. You can use as parameters:
 
-  - `:lastmod` as the time it was modified last time. See `Sitemap.Func.iso8601/0`.
+  - `:lastmod` as the time it was modified last time. See `Sitemaps.Func.iso8601/0`.
   - `:expires` as the number of seconds when it will expire.
   - `:changefreq` as the frequency of changing of the link.
   - `:priority` as the number of the priority of the link.

@@ -1,12 +1,12 @@
-defmodule Sitemap.OptionsTest do
+defmodule Sitemaps.OptionsTest do
   use ExUnit.Case
-  use Sitemap, compress: false, create_index: true
+  use Sitemaps, compress: false, create_index: true
 
   setup do
-    Sitemap.Builders.File.stop()
-    Sitemap.Builders.IndexFile.stop()
-    Sitemap.Namer.stop(:file)
-    Sitemap.Namer.stop(:index_file)
+    Sitemaps.Builders.File.stop()
+    Sitemaps.Builders.IndexFile.stop()
+    Sitemaps.Namer.stop(:file)
+    Sitemaps.Namer.stop(:index_file)
 
     on_exit(fn ->
       nil
@@ -18,35 +18,35 @@ defmodule Sitemap.OptionsTest do
 
   test "Change option in opt statement" do
     create do
-      assert Sitemap.Config.get().compress == false
+      assert Sitemaps.Config.get().compress == false
     end
 
-    Sitemap.Config.set(:compress, true)
+    Sitemaps.Config.set(:compress, true)
   end
 
   test "Change create_index option in opt statement" do
     create do
-      assert Sitemap.Config.get().create_index == true
+      assert Sitemaps.Config.get().create_index == true
     end
 
-    Sitemap.Config.set(:create_index, :auto)
+    Sitemaps.Config.set(:create_index, :auto)
   end
 
   test "Change option in create statement" do
     create public_path: "abcde" do
-      assert Sitemap.Config.get().public_path == "abcde"
+      assert Sitemaps.Config.get().public_path == "abcde"
     end
 
-    assert Sitemap.Config.get().public_path == "abcde"
+    assert Sitemaps.Config.get().public_path == "abcde"
 
     create public_path: "" do
-      assert Sitemap.Config.get().public_path == ""
+      assert Sitemaps.Config.get().public_path == ""
     end
 
-    assert Sitemap.Config.get().public_path == ""
+    assert Sitemaps.Config.get().public_path == ""
 
     create public_path: "sitemaps/" do
-      assert Sitemap.Config.get().public_path == "sitemaps/"
+      assert Sitemaps.Config.get().public_path == "sitemaps/"
     end
   end
 

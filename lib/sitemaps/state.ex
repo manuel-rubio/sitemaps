@@ -1,4 +1,4 @@
-defmodule Sitemap.State do
+defmodule Sitemaps.State do
   @moduledoc """
   Creates a state for the modules that use this module.
   """

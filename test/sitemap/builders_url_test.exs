@@ -1,9 +1,9 @@
-defmodule Sitemap.BuildersUrlTest do
+defmodule Sitemaps.BuildersUrlTest do
   use ExUnit.Case
 
   import SweetXml, only: [sigil_x: 2, parse: 1]
 
-  alias Sitemap.Builders.Url
+  alias Sitemaps.Builders.Url
   alias SweetXml
 
   require XmlBuilder
@@ -17,10 +17,10 @@ defmodule Sitemap.BuildersUrlTest do
   end
 
   setup do
-    Sitemap.Builders.File.stop()
-    Sitemap.Builders.IndexFile.stop()
-    Sitemap.Namer.stop(:file)
-    Sitemap.Namer.stop(:index_file)
+    Sitemaps.Builders.File.stop()
+    Sitemaps.Builders.IndexFile.stop()
+    Sitemaps.Namer.stop(:file)
+    Sitemaps.Namer.stop(:index_file)
 
     on_exit(fn ->
       nil
@@ -510,13 +510,13 @@ defmodule Sitemap.BuildersUrlTest do
   end
 
   test "date and datetime convert to iso8601" do
-    assert String.contains?(Sitemap.Func.iso8601(), ["T", "Z"])
+    assert String.contains?(Sitemaps.Func.iso8601(), ["T", "Z"])
 
     if Code.ensure_loaded?(NaiveDateTime) do
-      assert "1111-11-11T11:11:11Z" = Sitemap.Func.iso8601(~N[1111-11-11 11:11:11.111111])
+      assert "1111-11-11T11:11:11Z" = Sitemaps.Func.iso8601(~N[1111-11-11 11:11:11.111111])
 
       assert "1111-11-11T11:11:11Z" =
-               Sitemap.Func.iso8601(%DateTime{
+               Sitemaps.Func.iso8601(%DateTime{
                  year: 1111,
                  month: 11,
                  day: 11,
@@ -531,7 +531,7 @@ defmodule Sitemap.BuildersUrlTest do
                })
     end
 
-    assert "1111-11-11T11:11:11Z" = Sitemap.Func.iso8601({{1111, 11, 11}, {11, 11, 11}})
-    assert "1111-11-11" = Sitemap.Func.iso8601(~D[1111-11-11])
+    assert "1111-11-11T11:11:11Z" = Sitemaps.Func.iso8601({{1111, 11, 11}, {11, 11, 11}})
+    assert "1111-11-11" = Sitemaps.Func.iso8601(~D[1111-11-11])
   end
 end

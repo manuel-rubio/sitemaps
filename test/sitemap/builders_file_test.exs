@@ -1,22 +1,22 @@
-defmodule Sitemap.BuildersFileTest do
+defmodule Sitemaps.BuildersFileTest do
   use ExUnit.Case
 
   setup do
-    Sitemap.Builders.File.stop()
-    Sitemap.Builders.IndexFile.stop()
-    Sitemap.Namer.stop(:file)
-    Sitemap.Namer.stop(:index_file)
+    Sitemaps.Builders.File.stop()
+    Sitemaps.Builders.IndexFile.stop()
+    Sitemaps.Namer.stop(:file)
+    Sitemaps.Namer.stop(:index_file)
   end
 
   test "Add Builders.File" do
     data = [lastmod: "lastmod", expires: "expires", changefreq: "changefreq", priority: 0.5]
-    assert :ok == Sitemap.Builders.File.add("", data)
+    assert :ok == Sitemaps.Builders.File.add("", data)
   end
 
   test "Adds Builders.File" do
     data = [lastmod: "lastmod", expires: "expires", changefreq: "changefreq", priority: 0.5]
-    Enum.each(1..10, fn _ -> Sitemap.Builders.File.add("", data) end)
+    Enum.each(1..10, fn _ -> Sitemaps.Builders.File.add("", data) end)
 
-    assert 10 == Sitemap.Builders.File.state().link_count
+    assert 10 == Sitemaps.Builders.File.state().link_count
   end
 end

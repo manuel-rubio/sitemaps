@@ -1,11 +1,11 @@
-defmodule Sitemap.Namer do
+defmodule Sitemaps.Namer do
   @moduledoc """
   Names generated for the sitemap files.
   """
-  alias Sitemap.Config
-  alias Sitemap.NameError
+  alias Sitemaps.Config
+  alias Sitemaps.NameError
 
-  use Sitemap.State,
+  use Sitemaps.State,
     ext: ".xml.gz",
     zero: nil,
     start: 1,

@@ -1,17 +1,17 @@
-defmodule Sitemap.Builders.File do
+defmodule Sitemaps.Builders.File do
   @moduledoc """
   Build the file content of the sitemap. It creates the file and
   it's in charge of the size, if it's growing over the configured
   size, it's creating a new file.
   """
-  alias Sitemap.Builders.Url
-  alias Sitemap.Config
-  alias Sitemap.Consts
-  alias Sitemap.Location
+  alias Sitemaps.Builders.Url
+  alias Sitemaps.Config
+  alias Sitemaps.Consts
+  alias Sitemaps.Location
 
   require XmlBuilder
 
-  use Sitemap.State,
+  use Sitemaps.State,
     link_count: 0,
     news_count: 0,
     content: "",
@@ -56,6 +56,6 @@ defmodule Sitemap.Builders.File do
     content = Consts.xml_header() <> state().content <> Consts.xml_footer()
 
     Location.reserve_name(:file)
-    Sitemap.File.write(:file, content)
+    Sitemaps.File.write(:file, content)
   end
 end

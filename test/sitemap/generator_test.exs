@@ -1,12 +1,12 @@
-defmodule Sitemap.GeneratorTest do
+defmodule Sitemaps.GeneratorTest do
   use ExUnit.Case
-  use Sitemap
+  use Sitemaps
 
   setup do
-    Sitemap.Builders.File.stop()
-    Sitemap.Builders.IndexFile.stop()
-    Sitemap.Namer.stop(:file)
-    Sitemap.Namer.stop(:index_file)
+    Sitemaps.Builders.File.stop()
+    Sitemaps.Builders.IndexFile.stop()
+    Sitemaps.Namer.stop(:file)
+    Sitemaps.Namer.stop(:index_file)
   end
 
   test "create macro" do
@@ -20,7 +20,7 @@ defmodule Sitemap.GeneratorTest do
       add("entry", priority: nil, changefreq: nil, lastmod: nil, mobile: true)
       add("about", priority: nil, changefreq: nil, lastmod: nil, mobile: true)
       add("contact", priority: nil, changefreq: nil, lastmod: nil, mobile: true)
-      assert Sitemap.Builders.File.state().link_count == 5
+      assert Sitemaps.Builders.File.state().link_count == 5
     end
   end
 
@@ -29,21 +29,21 @@ defmodule Sitemap.GeneratorTest do
       add_to_index("/mysitemap1.xml.gz")
 
       assert String.contains?(
-               Sitemap.Builders.IndexFile.state().content,
+               Sitemaps.Builders.IndexFile.state().content,
                "http://www.example.com/mysitemap1.xml.gz"
              )
 
       add_to_index("/alternatemap.xml")
 
       assert String.contains?(
-               Sitemap.Builders.IndexFile.state().content,
+               Sitemaps.Builders.IndexFile.state().content,
                "http://www.example.com/alternatemap.xml"
              )
 
       add_to_index("/changehost.xml.gz", host: "http://google.com")
 
       assert String.contains?(
-               Sitemap.Builders.IndexFile.state().content,
+               Sitemaps.Builders.IndexFile.state().content,
                "http://google.com/changehost.xml.gz"
              )
     end

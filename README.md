@@ -1,47 +1,30 @@
-# Sitemap
+# Sitemaps
 
-[![Build Status](http://img.shields.io/travis/ikeikeikeike/sitemap.svg?style=flat-square)](http://travis-ci.org/ikeikeikeike/sitemap)
-[![Hex version](https://img.shields.io/hexpm/v/sitemap.svg "Hex version")](https://hex.pm/packages/sitemap)
-[![Hex downloads](https://img.shields.io/hexpm/dt/sitemap.svg "Hex downloads")](https://hex.pm/packages/sitemap)
-[![Inline docs](https://inch-ci.org/github/ikeikeikeike/sitemap.svg)](http://inch-ci.org/github/ikeikeikeike/sitemap)
-[![hex.pm](https://img.shields.io/hexpm/l/ltsv.svg)](https://github.com/ikeikeikeike/sitemap/blob/master/LICENSE)
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/manuel-rubio/sitemaps/elixir.yml)
 
-
-Generating sitemap.xml
-
+Generating sitemap files.
 
 ## Installation
 
-
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed as:
-
-  1. Add the sitemap library to your list of dependencies in `mix.exs`:
+Add the sitemap library to your list of dependencies in `mix.exs`:
 
   ```elixir
   def deps do
-    [{:sitemap, "~> 1.1"}]
+    [{:sitemaps, "~> 1.2"}]
   end
   ```
 
-  2. Ensure the sitemap application is started before your application:
-
-  ```elixir
-  def application do
-    [extra_applications: [:sitemap]]
-  end
-  ```
-
-#### Usage
+### Usage
 
 sitemap helps you define a module with a `generate` function that will build a sitemap for your site. You must decide how to call `generate` - via a manual Mix task, a recurring background job, or whatever you choose.
 
 The resulting sitemap is written to a file.
 
-###### Basic
+#### Basic
 
 ```elixir
-defmodule Sitemaps do
-  use Sitemap
+defmodule MyApp.Sitemaps do
+  use Sitemaps
 
   def generate do
     create do
@@ -56,13 +39,13 @@ defmodule Sitemaps do
 end
 ```
 
-###### With Phoenix
+#### With Phoenix
 
 ```elixir
-defmodule Sitemaps do
+defmodule MyAppWeb.Sitemaps do
   alias MyAppWeb.{Endpoint, Router.Helpers}
 
-  use Sitemap,
+  use Sitemaps,
     host: "http://#{Application.get_env(:myapp, Endpoint)[:url][:host]}",
     files_path: "priv/static/sitemaps/",
     public_path: "sitemaps/"
@@ -81,13 +64,13 @@ defmodule Sitemaps do
 end
 ```
 
-#### Ways to set sitemap's options
+### Ways to set sitemap's options
 
-###### Set options via the `use` statement
+#### Set options via the `use` statement
 
 ```elixir
-defmodule Sitemaps do
-  use Sitemap, compress: false, host: "http://example.com"
+defmodule MyApp.Sitemaps do
+  use Sitemaps, compress: false, host: "http://example.com"
 
   def generate do
     create do
@@ -100,12 +83,11 @@ defmodule Sitemaps do
 end
 ```
 
-###### Set options via arguments to `create`
-
+#### Set options via arguments to `create`
 
 ```elixir
-defmodule Sitemaps do
-  use Sitemap
+defmodule MyApp.Sitemaps do
+  use Sitemaps
 
   def generate do
     create compress: false, host: "http://example.com" do
@@ -118,47 +100,40 @@ defmodule Sitemaps do
 end
 ```
 
-###### Set options via `Mix` config
-
+#### Set options via `Config` config
 
 ```elixir
-use Mix.Config
+import Config
 
-config :sitemap, [
+config :sitemaps, [
   compress: false,
   host: "http://example.com",
 ]
 
 ```
 
-###### Set options via environment variables
+#### Set options via environment variables
 
 ```elixir
-SITEMAP_COMPRESS=false SITEMAP_HOST=http://example.com mix run ./sitemap.exs
+SITEMAPS_COMPRESS=false SITEMAPS_HOST=http://example.com mix sitemaps
 ```
-
-And you guys should follow the mix task documents, here:
-
-- https://hexdocs.pm/mix/Mix.Tasks.Run.html
-- https://hexdocs.pm/mix/Mix.Task.html
-
 
 ##### Available options
 
 | Name                  | Default Value          | Environment           | -    |
 |:----------------------|:-----------------------|:----------------------|:-----|
-| max_sitemap_files     | 10000                  | SITEMAP_MAXFILES      | Max sitemap links per index file |
-| max_sitemap_links     | 10000                  | SITEMAP_MAXLINKS      | Max links per sitemap  |
-| max_sitemap_news      | 1000                   | SITEMAP_MAXNEWS       | Max news sitemap per index_file  |
-| max_sitemap_images    | 1000                   | SITEMAP_MAXIMAGES     | Max images per url  |
-| max_sitemap_file_size | 5000000                | SITEMAP_MAXFILESIZE   | Bytes |
-| host                  | http://www.example.com | SITEMAP_HOST          | Your domain, also host with http scheme.  |
-| filename              | sitemap                | SITEMAP_FILENAME      | Name of sitemap file.  |
-| files_path            | sitemap                | SITEMAP_SITEMAPS_PATH | After domain path's location on URL.  |
-| public_path           | sitemap                | SITEMAP_PUBLIC_PATH   | Write sitemap files to this local path.  |
-| verbose               | true                   | SITEMAP_VERBOSE       | Getting more information in sitemap working.  |
-| compress              | true                   | SITEMAP_COMPRESS      | Gzip compression.  |
-| create_index          | auto                   | SITEMAP_CREATE_INDEX  | Generating sitemaps to this directory path.  |
+| max_sitemap_files     | 10000                  | SITEMAPS_MAXFILES      | Max sitemap links per index file |
+| max_sitemap_links     | 10000                  | SITEMAPS_MAXLINKS      | Max links per sitemap  |
+| max_sitemap_news      | 1000                   | SITEMAPS_MAXNEWS       | Max news sitemap per index_file  |
+| max_sitemap_images    | 1000                   | SITEMAPS_MAXIMAGES     | Max images per url  |
+| max_sitemap_file_size | 5000000                | SITEMAPS_MAXFILESIZE   | Bytes |
+| host                  | http://www.example.com | SITEMAPS_HOST          | Your domain, also host with http scheme.  |
+| filename              | sitemap                | SITEMAPS_FILENAME      | Name of sitemap file.  |
+| files_path            | sitemap                | SITEMAPS_SITEMAPS_PATH | After domain path's location on URL.  |
+| public_path           | sitemap                | SITEMAPS_PUBLIC_PATH   | Write sitemap files to this local path.  |
+| verbose               | true                   | SITEMAPS_VERBOSE       | Getting more information in sitemap working.  |
+| compress              | true                   | SITEMAPS_COMPRESS      | Gzip compression.  |
+| create_index          | auto                   | SITEMAPS_CREATE_INDEX  | Generating sitemaps to this directory path.  |
 
 ### Features
 
@@ -184,8 +159,8 @@ Current Features or To-Do
 ### News Sitemaps
 
 ```elixir
-defmodule Sitemaps do
-  use Sitemap, compress: false, host: "http://example.com"
+defmodule MyApp.Sitemaps do
+  use Sitemaps, compress: false, host: "http://example.com"
 
   def generate do
     create do
@@ -204,7 +179,7 @@ defmodule Sitemaps do
 end
 ```
 
-###### Generated Result
+Generated Result
 
 ```xml
 <url>
@@ -230,8 +205,8 @@ Look at [Creating a Google News Sitemap](https://support.google.com/news/publish
 ### Image sitemaps
 
 ```elixir
-defmodule Sitemaps do
-  use Sitemap, compress: false, host: "http://example.com"
+defmodule MyApp.Sitemaps do
+  use Sitemaps, compress: false, host: "http://example.com"
 
   def generate do
     create do
@@ -247,7 +222,7 @@ defmodule Sitemaps do
 end
 ```
 
-###### Generated Result
+Generated Result
 
 ```xml
 <url>
@@ -265,12 +240,11 @@ end
 
 Look at [Image sitemaps](https://support.google.com/webmasters/answer/178636) as required.
 
-
 ### Video sitemaps
 
 ```elixir
-defmodule Sitemaps do
-  use Sitemap, compress: true, host: "http://example.com"
+defmodule MyApp.Sitemaps do
+  use Sitemaps, compress: true, host: "http://example.com"
 
   def generate do
     create do
@@ -310,7 +284,7 @@ end
 
 ```
 
-###### Generated Result
+Generated Result
 
 ```xml
 <url>
@@ -345,12 +319,11 @@ end
 
 Look at [Video sitemaps](https://developers.google.com/webmasters/videosearch/sitemaps#adding-video-content-to-a-sitemap) as required.
 
-
 ### Alternate Links
 
 ```elixir
-defmodule Sitemaps do
-  use Sitemap, compress: true, host: "http://example.com"
+defmodule MyApp.Sitemaps do
+  use Sitemaps, compress: true, host: "http://example.com"
 
   def generate do
     create do
@@ -365,7 +338,7 @@ defmodule Sitemaps do
 end
 ```
 
-###### Generated Result
+Generated Result
 
 ```xml
 <url>
@@ -377,12 +350,11 @@ end
 
 Look at [Alternate Links](https://support.google.com/webmasters/answer/2620865) as required.
 
-
 ### Geo Sitemaps
 
 ```elixir
-defmodule Sitemaps do
-  use Sitemap, compress: true, host: "http://example.com"
+defmodule MyApp.Sitemaps do
+  use Sitemaps, compress: true, host: "http://example.com"
 
   def generate do
     create do
@@ -394,7 +366,7 @@ defmodule Sitemaps do
 end
 ```
 
-###### Generated Result
+Generated Result
 
 ```xml
 <url>
@@ -408,12 +380,11 @@ end
 
 Look at [Geo Sitemaps](https://support.google.com/webmasters/answer/94555) as required.
 
-
 ### Mobile Sitemaps
 
 ```elixir
-defmodule Sitemaps do
-  use Sitemap, compress: true, host: "http://example.com"
+defmodule MyApp.Sitemaps do
+  use Sitemaps, compress: true, host: "http://example.com"
 
   def generate do
     create do
@@ -423,7 +394,7 @@ defmodule Sitemaps do
 end
 ```
 
-###### Generated Result
+Generated Result
 
 ```xml
 <url>
@@ -437,12 +408,11 @@ end
 
 Look at [Mobile Sitemaps](https://support.google.com/webmasters/answer/6082207) as required.
 
-
 ### PageMap sitemap
 
 ```elixir
-defmodule Sitemaps do
-  use Sitemap, compress: true, host: "http://example.com"
+defmodule MyApp.Sitemaps do
+  use Sitemaps, compress: true, host: "http://example.com"
 
   def generate do
     create do
@@ -461,7 +431,7 @@ defmodule Sitemaps do
 end
 ```
 
-###### Generated Result
+Generated Result
 
 ```xml
 <url>
@@ -478,9 +448,7 @@ end
 
 Look at [PageMap sitemap](https://developers.google.com/custom-search/docs/structured_data#addtositemaps) as required.
 
-
 ### Additional links into the Sitemap Index
-
 
 ```elixir
 create do
@@ -492,6 +460,8 @@ create do
   add ....
 end
 ```
+
+Generated result
 
 ```xml
 <?xml version='1.0' encoding='utf-8'?>
@@ -514,12 +484,6 @@ end
  </sitemap>
 </sitemapindex>
 ```
-
-
-### Known issue
-
-- [Compilation error with ** (EXIT) no process](https://github.com/ikeikeikeike/sitemap/issues/5#issue-200979852)
-
 
 ### Inspired by
 
